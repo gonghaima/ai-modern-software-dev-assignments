@@ -37,7 +37,7 @@ QUESTION = (
 
 
 # TODO: Fill this in!
-YOUR_SYSTEM_PROMPT = ""
+YOUR_SYSTEM_PROMPT = "You are a helpful coding assistant. Write clean, functional Python code based on the provided context. Follow the requirements exactly and include all necessary imports."
 
 
 # For this simple example
@@ -56,7 +56,7 @@ def YOUR_CONTEXT_PROVIDER(corpus: List[str]) -> List[str]:
 
     For example, return [] to simulate missing context, or [corpus[0]] to include the API docs.
     """
-    return []
+    return [corpus[0]] if corpus else []
 
 
 def make_user_prompt(question: str, context_docs: List[str]) -> str:
@@ -104,6 +104,7 @@ def test_your_prompt(system_prompt: str, context_provider: Callable[[List[str]],
             ],
             options={"temperature": 0.0},
         )
+        print('response:', response)
         output_text = response.message.content
         code = extract_code_block(output_text)
         missing = [s for s in REQUIRED_SNIPPETS if s not in code]

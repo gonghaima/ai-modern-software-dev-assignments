@@ -7,7 +7,18 @@ load_dotenv()
 NUM_RUNS_TIMES = 5
 
 # TODO: Fill this in!
-YOUR_SYSTEM_PROMPT = ""
+YOUR_SYSTEM_PROMPT = """You are a word reversal assistant. Here are some examples:
+
+Word: hello
+Reversed: olleh
+
+Word: python
+Reversed: nohtyp
+
+Word: example
+Reversed: elpmaxe
+
+Now reverse the given word by outputting only the reversed letters."""
 
 USER_PROMPT = """
 Reverse the order of letters in the following word. Only output the reversed word, no other text:

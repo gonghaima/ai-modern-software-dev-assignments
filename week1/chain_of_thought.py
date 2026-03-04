@@ -7,8 +7,11 @@ load_dotenv()
 
 NUM_RUNS_TIMES = 5
 
-# TODO: Fill this in!
-YOUR_SYSTEM_PROMPT = ""
+YOUR_SYSTEM_PROMPT = """
+You are a mathematical problem solver. Work through problems step by step using clear reasoning.
+For modular exponentiation problems, use patterns in powers to find cycles.
+Always end your response with "Answer: <number>" on the last line.
+"""
 
 
 USER_PROMPT = """
