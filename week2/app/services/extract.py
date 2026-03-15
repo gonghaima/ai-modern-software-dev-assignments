@@ -32,37 +32,7 @@ def _is_action_line(line: str) -> bool:
 
 
 def extract_action_items(text: str) -> List[str]:
-    try:
-        response = chat(
-            model="mistral-nemo:12b",
-            messages=[
-                {
-                    "role": "system",
-                    "content": "You are an assistant that extracts action items from text. Return ONLY a JSON object with an 'action_items' key containing an array of strings. Each string should be one action item. Example: {\"action_items\": [\"Update database\", \"Review code\"]}"
-                },
-                {
-                    "role": "user",
-                    "content": f"Extract all action items from the following text:\n\n{text}"
-                }
-            ],
-            format="json"
-        )
-        
-        result = json.loads(response.message.content)
-        
-        # Handle different response formats
-        if isinstance(result, dict) and "action_items" in result:
-            items = result["action_items"]
-        elif isinstance(result, list):
-            items = result
-        else:
-            items = []
-        
-        return [str(item).strip() for item in items if str(item).strip()]
-    except Exception as e:
-        print(f"LLM extraction failed: {e}")
-        # Fallback to regex if LLM fails
-        return _extract_with_regex(text)
+    return _extract_with_regex(text)
 
 
 def _extract_with_regex(text: str) -> List[str]:
@@ -95,6 +65,40 @@ def _extract_with_regex(text: str) -> List[str]:
         seen.add(lowered)
         unique.append(item)
     return unique
+
+
+def extract_action_items_llm(text: str) -> List[str]:
+    try:
+        response = chat(
+            model="mistral-nemo:12b",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are an assistant that extracts action items from text. Return ONLY a JSON object with an 'action_items' key containing an array of strings. Each string should be one action item. Example: {\"action_items\": [\"Update database\", \"Review code\"]}"
+                },
+                {
+                    "role": "user",
+                    "content": f"Extract all action items from the following text:\n\n{text}"
+                }
+            ],
+            format="json"
+        )
+
+        result = json.loads(response.message.content)
+
+        # Handle different response formats
+        if isinstance(result, dict) and "action_items" in result:
+            items = result["action_items"]
+        elif isinstance(result, list):
+            items = result
+        else:
+            items = []
+
+        return [str(item).strip() for item in items if str(item).strip()]
+    except Exception as e:
+        print(f"LLM extraction failed: {e}")
+        # Fallback to regex if LLM fails
+        return _extract_with_regex(text)
 
 
 def _looks_imperative(sentence: str) -> bool:

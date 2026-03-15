@@ -30,3 +30,16 @@ LEFT JOIN notes n ON ai.note_id = n.id;
 
 -- Exit sqlite3
 .quit
+
+
+
+check code in the following folder
+/Users/stevengong/study/modern-software-dev-assignments/week2/app
+
+/Users/stevengong/study/modern-software-dev-assignments/week2/frontend
+
+and "TODO 1: Scaffold a New Feature" section in /Users/stevengong/study/modern-software-dev-assignments/week2/assignment.md
+
+Don't change anything, but suggest what to do, is current code already contains required feature?
+
+
