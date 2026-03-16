@@ -37,11 +37,23 @@ LEFT JOIN notes n ON ai.note_id = n.id;
 pytest week2/tests/test_extract.py
 ```
 
+## Change log
+
+Week2 TODO 2:
+changed
+
+Added Pydantic schemas and wired response_model + request models in routers.
+Updated db.py to return plain dicts instead of sqlite3.Row.
+Moved init_db() into FastAPI lifespan.
+Replaced manual validation with Pydantic validation (whitespace-trimming + empty checks).
+Centralized config in config.py (DB paths + model name).
+Swapped print for logging.exception and removed unused imports.
+
 check code in the following folder
 /Users/stevengong/study/modern-software-dev-assignments/week2/app
 
 /Users/stevengong/study/modern-software-dev-assignments/week2/frontend
 
-and "TODO 2: Add Unit Tests" section in /Users/stevengong/study/modern-software-dev-assignments/week2/assignment.md
+and "TODO 3: Refactor Existing Code for Clarity" section in /Users/stevengong/study/modern-software-dev-assignments/week2/assignment.md
 
 Don't change anything, but suggest what to do, is current code already contains required feature?

@@ -1,12 +1,13 @@
 from __future__ import annotations
 
-import os
 import re
 from typing import List
 import json
-from typing import Any
 from ollama import chat
 from dotenv import load_dotenv
+import logging
+
+from ..config import OLLAMA_MODEL
 
 load_dotenv()
 
@@ -70,7 +71,7 @@ def _extract_with_regex(text: str) -> List[str]:
 def extract_action_items_llm(text: str) -> List[str]:
     try:
         response = chat(
-            model="mistral-nemo:12b",
+            model=OLLAMA_MODEL,
             messages=[
                 {
                     "role": "system",
@@ -95,8 +96,8 @@ def extract_action_items_llm(text: str) -> List[str]:
             items = []
 
         return [str(item).strip() for item in items if str(item).strip()]
-    except Exception as e:
-        print(f"LLM extraction failed: {e}")
+    except Exception:
+        logging.exception("LLM extraction failed")
         # Fallback to regex if LLM fails
         return _extract_with_regex(text)
 

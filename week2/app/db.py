@@ -1,13 +1,9 @@
 from __future__ import annotations
 
 import sqlite3
-from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
-
-BASE_DIR = Path(__file__).resolve().parents[1]
-DATA_DIR = BASE_DIR / "data"
-DB_PATH = DATA_DIR / "app.db"
+from .config import DATA_DIR, DB_PATH
 
 
 def ensure_data_directory_exists() -> None:
@@ -57,14 +53,18 @@ def insert_note(content: str) -> int:
         return int(cursor.lastrowid)
 
 
-def list_notes() -> list[sqlite3.Row]:
+def _row_to_dict(row: sqlite3.Row) -> dict[str, Any]:
+    return {key: row[key] for key in row.keys()}
+
+
+def list_notes() -> list[dict[str, Any]]:
     with get_connection() as connection:
         cursor = connection.cursor()
         cursor.execute("SELECT id, content, created_at FROM notes ORDER BY id DESC")
-        return list(cursor.fetchall())
+        return [_row_to_dict(row) for row in cursor.fetchall()]
 
 
-def get_note(note_id: int) -> Optional[sqlite3.Row]:
+def get_note(note_id: int) -> Optional[dict[str, Any]]:
     with get_connection() as connection:
         cursor = connection.cursor()
         cursor.execute(
@@ -72,7 +72,9 @@ def get_note(note_id: int) -> Optional[sqlite3.Row]:
             (note_id,),
         )
         row = cursor.fetchone()
-        return row
+        if row is None:
+            return None
+        return _row_to_dict(row)
 
 
 def insert_action_items(items: list[str], note_id: Optional[int] = None) -> list[int]:
@@ -89,7 +91,7 @@ def insert_action_items(items: list[str], note_id: Optional[int] = None) -> list
         return ids
 
 
-def list_action_items(note_id: Optional[int] = None) -> list[sqlite3.Row]:
+def list_action_items(note_id: Optional[int] = None) -> list[dict[str, Any]]:
     with get_connection() as connection:
         cursor = connection.cursor()
         if note_id is None:
@@ -101,7 +103,7 @@ def list_action_items(note_id: Optional[int] = None) -> list[sqlite3.Row]:
                 "SELECT id, note_id, text, done, created_at FROM action_items WHERE note_id = ? ORDER BY id DESC",
                 (note_id,),
             )
-        return list(cursor.fetchall())
+        return [_row_to_dict(row) for row in cursor.fetchall()]
 
 
 def mark_action_item_done(action_item_id: int, done: bool) -> None:
@@ -112,5 +114,4 @@ def mark_action_item_done(action_item_id: int, done: bool) -> None:
             (1 if done else 0, action_item_id),
         )
         connection.commit()
-
 
