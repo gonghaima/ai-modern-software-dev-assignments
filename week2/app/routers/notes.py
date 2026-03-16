@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException
 
+from typing import List
+
 from .. import db
 from ..schemas import NoteCreateRequest, NoteResponse
 
@@ -20,6 +22,13 @@ def create_note(payload: NoteCreateRequest) -> NoteResponse:
         "content": note["content"],
         "created_at": note["created_at"],
     }
+
+
+# TODO 4: New endpoint to list all notes
+@router.get("", response_model=List[NoteResponse])
+def list_notes() -> List[NoteResponse]:
+    notes = db.list_notes()
+    return [{"id": n["id"], "content": n["content"], "created_at": n["created_at"]} for n in notes]
 
 
 @router.get("/{note_id}", response_model=NoteResponse)
