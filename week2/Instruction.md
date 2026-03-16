@@ -54,6 +54,6 @@ check code in the following folder
 
 /Users/stevengong/study/modern-software-dev-assignments/week2/frontend
 
-and "TODO 4: Use Agentic Mode to Automate Small Tasks" section in /Users/stevengong/study/modern-software-dev-assignments/week2/assignment.md
+and "TODO 4: Generate a README from the Codebase" section in /Users/stevengong/study/modern-software-dev-assignments/week2/assignment.md
 
 Don't change anything, but suggest what to do, is current code already contains required feature?
