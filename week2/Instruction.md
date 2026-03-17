@@ -70,3 +70,12 @@ Then check the requirement for week3
 /Users/stevengong/study/modern-software-dev-assignments/week3/assignment.md
 
 Then give me the plan of doing this assignment
+
+
+
+Then check the requirement for week3
+/Users/stevengong/study/modern-software-dev-assignments/week3/assignment.md
+and implementationPlan
+/Users/stevengong/study/modern-software-dev-assignments/week3/implementationPlan.md
+
+implement step 1, 2, and 3
