@@ -57,3 +57,16 @@ check code in the following folder
 and "TODO 4: Generate a README from the Codebase" section in /Users/stevengong/study/modern-software-dev-assignments/week2/assignment.md
 
 Don't change anything, but suggest what to do, is current code already contains required feature?
+
+
+
+
+
+check code in the following folder
+/Users/stevengong/study/modern-software-dev-assignments/week2/app
+/Users/stevengong/study/modern-software-dev-assignments/week2/frontend
+
+Then check the requirement for week3
+/Users/stevengong/study/modern-software-dev-assignments/week3/assignment.md
+
+Then give me the plan of doing this assignment
