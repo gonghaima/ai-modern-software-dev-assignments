@@ -73,9 +73,15 @@ Then give me the plan of doing this assignment
 
 
 
-Then check the requirement for week3
+check the requirement for week3
 /Users/stevengong/study/modern-software-dev-assignments/week3/assignment.md
 and implementationPlan
 /Users/stevengong/study/modern-software-dev-assignments/week3/implementationPlan.md
+and code for week3
+/Users/stevengong/study/modern-software-dev-assignments/week3
 
-implement step 1, 2, and 3
+implement step 4
+
+
+
+check for this assignment https://github.com/mihail911/modern-software-dev-assignments/blob/master/week4/assignment.md, I am using ollama with mistral-nemo:12b model, can I do the similar automations?
