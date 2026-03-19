@@ -82,6 +82,6 @@ and code for week3
 
 implement step 4
 
-
+Refer to some pervious work /Users/stevengong/study/modern-software-dev-assignments/week3
 
 check for this assignment https://github.com/mihail911/modern-software-dev-assignments/blob/master/week4/assignment.md, I am using ollama with mistral-nemo:12b model, can I do the similar automations?
