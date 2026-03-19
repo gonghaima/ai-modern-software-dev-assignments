@@ -40,14 +40,14 @@ start of every chat and inline completion session.
    # Week 4 Project Rules
 
    ## App entry points
-   - Backend: `week4/backend/app/main.py`
-   - Routers: `week4/backend/app/routers/`
-   - Services: `week4/backend/app/services/`
-   - Tests: `week4/backend/tests/`
-   - Frontend: `week4/frontend/`
-   - DB seed: `week4/data/seed.sql`
+   - Backend: `week4-amazon-q/backend/app/main.py`
+   - Routers: `week4-amazon-q/backend/app/routers/`
+   - Services: `week4-amazon-q/backend/app/services/`
+   - Tests: `week4-amazon-q/backend/tests/`
+   - Frontend: `week4-amazon-q/frontend/`
+   - DB seed: `week4-amazon-q/data/seed.sql`
 
-   ## Run commands (from week4/ directory)
+   ## Run commands (from week4-amazon-q/ directory)
    - Start app: `make run`
    - Run tests: `make test`
    - Format: `make format`
@@ -62,10 +62,10 @@ start of every chat and inline completion session.
    - Always run `make lint` and `make test` after any backend change
 
    ## Workflow: adding a new endpoint
-   1. Write a failing test in `backend/tests/`
-   2. Implement the route in `backend/app/routers/`
+   1. Write a failing test in `week4-amazon-q/backend/tests/`
+   2. Implement the route in `week4-amazon-q/backend/app/routers/`
    3. Run `make format && make lint && make test`
-   4. Update `docs/TASKS.md` if the task is complete
+   4. Update `week4-amazon-q/docs/TASKS.md` if the task is complete
 
    ## Commands to avoid
    - Do NOT drop or recreate the database directly; use `make seed`
@@ -140,10 +140,10 @@ def read_file(path):
         return ""
 
 CONTEXT = {
-    "models":  read_file("week4/backend/app/models.py"),
-    "schemas": read_file("week4/backend/app/schemas.py"),
-    "notes_router": read_file("week4/backend/app/routers/notes.py"),
-    "test_notes": read_file("week4/backend/tests/test_notes.py"),
+    "models":  read_file("week4-amazon-q/backend/app/models.py"),
+    "schemas": read_file("week4-amazon-q/backend/app/schemas.py"),
+    "notes_router": read_file("week4-amazon-q/backend/app/routers/notes.py"),
+    "test_notes": read_file("week4-amazon-q/backend/tests/test_notes.py"),
 }
 
 def ollama_call(system_prompt: str, user_prompt: str) -> str:
@@ -268,14 +268,14 @@ saved prompts, accessible via `@prompt` in any chat session.
 2. Create `~/.aws/amazonq/prompts/docs-sync.md`:
    ```markdown
    Read the current OpenAPI spec from http://localhost:8000/openapi.json and compare
-   it against week4/docs/TASKS.md. List any endpoints that exist in the API but are
+   it against week4-amazon-q/docs/TASKS.md. List any endpoints that exist in the API but are
    not documented, and any documented tasks that are not yet implemented. Output a
    concise diff-style summary with TODOs.
    ```
 
 3. Create `~/.aws/amazonq/prompts/run-tests.md`:
    ```markdown
-   Run `make test` from the week4/ directory. If tests pass, also run `make lint`.
+   Run `make test` from the week4-amazon-q/ directory. If tests pass, also run `make lint`.
    Summarize any failures with the failing test name, error message, and a suggested
    fix. If all pass, confirm with a green summary.
    ```
@@ -295,7 +295,7 @@ In Amazon Q chat, type:
 
 ## Applying the Automations to the Week 4 TASKS
 
-Here's how to use the automations above to work through `week4/docs/TASKS.md`:
+Here's how to use the automations above to work through `week4-amazon-q/docs/TASKS.md`:
 
 | Task | Automation to use |
 |---|---|
@@ -307,6 +307,6 @@ Here's how to use the automations above to work through `week4/docs/TASKS.md`:
 
 After each integration step, always run:
 ```bash
-cd week4
+cd week4-amazon-q
 make format && make lint && make test
 ```
