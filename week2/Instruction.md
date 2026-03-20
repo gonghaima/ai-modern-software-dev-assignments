@@ -85,3 +85,27 @@ implement step 4
 Refer to some pervious work /Users/stevengong/study/modern-software-dev-assignments/week3
 
 check for this assignment https://github.com/mihail911/modern-software-dev-assignments/blob/master/week4/assignment.md, I am using ollama with mistral-nemo:12b model, can I do the similar automations?
+
+
+check /Users/stevengong/study/modern-software-dev-assignments/week4-amazon-q/implementation.md, implement "Automation 1" section
+
+## Automation 1 — Amazon Q workspace rules 
+
+The rules file is already active — Amazon Q reads .amazonq/rules/*.md automatically. There's nothing to "run" for Automation 1 since it's just context injection, not a script.
+
+Here's how to verify it's working:
+
+Test it right now in this chat:
+Ask me something like:
+
+"Add a DELETE /notes/{id} endpoint"
+
+You should see me automatically follow the workflow (write test first → implement → remind you to run make lint && make test) without you having to explain the project structure.
+
+Or ask a structure question:
+
+"Where do routers live in this project?"
+
+I should answer week4-amazon-q/backend/app/routers/ without you providing any context.
+
+To confirm the file is being picked up:
