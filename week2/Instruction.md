@@ -109,3 +109,29 @@ Or ask a structure question:
 I should answer week4-amazon-q/backend/app/routers/ without you providing any context.
 
 To confirm the file is being picked up:
+
+
+## Automation 2 — Ollama SubAgent Script (TestAgent + CodeAgent)
+
+check /Users/stevengong/study/modern-software-dev-assignments/week4-amazon-q/implementation.md, implement "Automation 2" section
+
+
+
+To use it, run from the repo root:
+
+```
+conda activate cs146s
+python week4-amazon-q/subagents.py "Add PUT /notes/{id} to edit a note's title and content"
+```
+
+The script will:
+
+1. Load context from your existing models, schemas, router, and test files
+
+2. Call TestAgent → generates a pytest test → saved to generated_test.py
+
+3. Call CodeAgent → generates the implementation → saved to generated_impl.py
+
+Both outputs are written to week4-amazon-q/ for you to review before manually integrating into the actual app files and running make test.
+
+
