@@ -1,11 +1,11 @@
 from datetime import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class NoteCreate(BaseModel):
-    title: str
-    content: str
+    title: str = Field(min_length=1)
+    content: str = Field(min_length=1)
 
 
 class NoteRead(BaseModel):
@@ -25,7 +25,7 @@ class NotePatch(BaseModel):
 
 
 class ActionItemCreate(BaseModel):
-    description: str
+    description: str = Field(min_length=1)
 
 
 class ActionItemRead(BaseModel):
@@ -42,5 +42,3 @@ class ActionItemRead(BaseModel):
 class ActionItemPatch(BaseModel):
     description: str | None = None
     completed: bool | None = None
-
-

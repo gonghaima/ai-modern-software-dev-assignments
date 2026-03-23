@@ -19,5 +19,3 @@ def extract_action_items(text: str) -> list[str]:
         elif any(phrase in normalized for phrase in _ACTION_PHRASES):
             results.append(line)
     return results
-
-
