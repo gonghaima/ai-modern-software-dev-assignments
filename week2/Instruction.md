@@ -58,10 +58,6 @@ and "TODO 4: Generate a README from the Codebase" section in /Users/stevengong/s
 
 Don't change anything, but suggest what to do, is current code already contains required feature?
 
-
-
-
-
 check code in the following folder
 /Users/stevengong/study/modern-software-dev-assignments/week2/app
 /Users/stevengong/study/modern-software-dev-assignments/week2/frontend
@@ -70,8 +66,6 @@ Then check the requirement for week3
 /Users/stevengong/study/modern-software-dev-assignments/week3/assignment.md
 
 Then give me the plan of doing this assignment
-
-
 
 check the requirement for week3
 /Users/stevengong/study/modern-software-dev-assignments/week3/assignment.md
@@ -86,12 +80,11 @@ Refer to some pervious work /Users/stevengong/study/modern-software-dev-assignme
 
 check for this assignment https://github.com/mihail911/modern-software-dev-assignments/blob/master/week4/assignment.md, I am using ollama with mistral-nemo:12b model, can I do the similar automations?
 
-
 check /Users/stevengong/study/modern-software-dev-assignments/week4-amazon-q/implementation.md, implement "Automation 1" section
 
-## Automation 1 — Amazon Q workspace rules 
+## Automation 1 — Amazon Q workspace rules
 
-The rules file is already active — Amazon Q reads .amazonq/rules/*.md automatically. There's nothing to "run" for Automation 1 since it's just context injection, not a script.
+The rules file is already active — Amazon Q reads .amazonq/rules/\*.md automatically. There's nothing to "run" for Automation 1 since it's just context injection, not a script.
 
 Here's how to verify it's working:
 
@@ -110,12 +103,9 @@ I should answer week4-amazon-q/backend/app/routers/ without you providing any co
 
 To confirm the file is being picked up:
 
-
 ## Automation 2 — Ollama SubAgent Script (TestAgent + CodeAgent)
 
 check /Users/stevengong/study/modern-software-dev-assignments/week4-amazon-q/implementation.md, implement "Automation 2" section
-
-
 
 To use it, run from the repo root:
 
@@ -134,4 +124,24 @@ The script will:
 
 Both outputs are written to week4-amazon-q/ for you to review before manually integrating into the actual app files and running make test.
 
+## Automation 3 (Bonus) — Saved Prompts as Reusable Slash Commands
 
+check /Users/stevengong/study/modern-software-dev-assignments/week4-amazon-q/implementation.md, implement "Automation 3" section
+
+prompts have been created in ~/.aws/amazonq/prompts
+
+To use them, type in any Amazon Q chat:
+
+```
+@docs-sync
+@run-tests
+```
+
+
+# Week7
+
+check code in /Users/stevengong/study/modern-software-dev-assignments/week7
+
+Check TASKS.md in /Users/stevengong/study/modern-software-dev-assignments/week7/docs/TASKS.md
+
+Do not change anything, give me plan to impletement all the tasks
