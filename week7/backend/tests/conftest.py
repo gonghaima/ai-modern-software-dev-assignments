@@ -37,5 +37,3 @@ def client() -> Generator[TestClient, None, None]:
         yield c
 
     os.unlink(db_path)
-
-
