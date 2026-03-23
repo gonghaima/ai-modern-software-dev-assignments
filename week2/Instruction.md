@@ -145,3 +145,10 @@ check code in /Users/stevengong/study/modern-software-dev-assignments/week7
 Check TASKS.md in /Users/stevengong/study/modern-software-dev-assignments/week7/docs/TASKS.md
 
 Do not change anything, give me plan to impletement all the tasks
+
+
+
+implement task1 "Task 1: Add more endpoints and validations" based on your plan
+
+implement task2 "Task 2: Extend extraction logic" based on your plan
+/Users/stevengong/study/modern-software-dev-assignments/week7/docs/TASKS-Implementation.md
