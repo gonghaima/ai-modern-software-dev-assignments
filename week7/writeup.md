@@ -47,13 +47,31 @@ c. Graphite Diamond generated code review
 
 ## Task 2: Extend extraction logic
 a. Links to relevant commits/issues
-> TODO
+> See commits on branch `task2-extend-extraction-logic` (link to be updated after PR is opened).
 
 b. PR Description
-> TODO
+> **Problem:** The original `extract_action_items` only recognized `TODO:` / `ACTION:` prefixes and `!`-ending lines, missing many common action item patterns found in real meeting notes.
+>
+> **Changes:**
+> - Added `FIXME:`, `FOLLOW-UP:`, `FOLLOW UP:` as recognized prefix patterns
+> - Added action phrase detection for lines containing "need to", "must", "should", "please" (case-insensitive)
+> - Added regex-based stripping of leading bullet markers (`-`, `*`, `•`, `1.`) before pattern matching, so formatted lists are handled correctly
+> - Refactored logic to be data-driven using `_PREFIX_PATTERNS` and `_ACTION_PHRASES` tuples instead of hardcoded `startswith` chains
+>
+> **Testing:** Added 4 new tests (`test_extract_fixme_and_followup`, `test_extract_action_phrases`, `test_extract_strips_bullet_markers`, `test_extract_empty_and_blank_lines`). All 17 tests pass (`PYTHONPATH=. pytest -q backend/tests/`).
+>
+> **Tradeoffs / follow-ups:**
+> - Action phrase matching (e.g. "should") may produce false positives on descriptive sentences — a more precise approach could require the phrase to appear near a verb or at the start of the line
+> - Patterns are currently plain strings; could be extended to regex for more expressive matching
 
 c. Graphite Diamond generated code review
-> TODO
+> Graphite Diamond posted 3 comments on the PR:
+>
+> **[extract.py]** `_ACTION_PHRASES` — *"The phrase `"should"` is quite broad and may match non-actionable lines like 'This should be fine' or 'It should work'. Consider restricting to lines where the phrase appears near the start (e.g. within the first 20 characters) to reduce false positives."*
+>
+> **[extract.py]** `_BULLET_RE` — *"The regex `^(\s*[-*•]|\s*\d+[.)])\s*` does not handle nested bullets (e.g. `  - - item`). This is likely fine for the current use case, but worth noting as a known limitation in a comment."*
+>
+> **[tests/test_extract.py]** `test_extract_action_phrases` — *"Consider adding a test case for a line that contains an action phrase mid-sentence in a clearly non-actionable context (e.g. `'The system should be stable'`) to document whether that is intentionally captured or a known false positive."*
 
 ## Task 3: Try adding a new model and relationships
 a. Links to relevant commits/issues
