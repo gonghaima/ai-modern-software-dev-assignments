@@ -52,3 +52,50 @@ def test_delete_action_item_not_found(client):
 def test_create_action_item_validation(client):
     r = client.post("/action-items/", json={"description": ""})
     assert r.status_code == 422
+
+
+def test_action_items_pagination_skip_limit(client):
+    ids = [
+        client.post("/action-items/", json={"description": f"Item {i}"}).json()["id"]
+        for i in range(4)
+    ]
+    r = client.get("/action-items/", params={"sort": "id", "skip": 1, "limit": 2})
+    assert r.status_code == 200
+    returned_ids = [i["id"] for i in r.json()]
+    assert returned_ids == ids[1:3]
+
+
+def test_action_items_limit_one(client):
+    for i in range(3):
+        client.post("/action-items/", json={"description": f"A{i}"})
+    r = client.get("/action-items/", params={"limit": 1})
+    assert r.status_code == 200
+    assert len(r.json()) == 1
+
+
+def test_action_items_sort_ascending_vs_descending(client):
+    for i in range(3):
+        client.post("/action-items/", json={"description": f"Sort {i}"})
+    asc_ids = [i["id"] for i in client.get("/action-items/", params={"sort": "id"}).json()]
+    desc_ids = [i["id"] for i in client.get("/action-items/", params={"sort": "-id"}).json()]
+    assert asc_ids == sorted(asc_ids)
+    assert desc_ids == sorted(desc_ids, reverse=True)
+
+
+def test_action_items_completed_false_filter(client):
+    r = client.post("/action-items/", json={"description": "incomplete"})
+    incomplete_id = r.json()["id"]
+    r = client.post("/action-items/", json={"description": "complete me"})
+    client.put(f"/action-items/{r.json()['id']}/complete")
+
+    r = client.get("/action-items/", params={"completed": False})
+    assert r.status_code == 200
+    items = r.json()
+    assert all(not i["completed"] for i in items)
+    assert any(i["id"] == incomplete_id for i in items)
+
+
+def test_action_items_invalid_sort_field_no_500(client):
+    client.post("/action-items/", json={"description": "Fallback"})
+    r = client.get("/action-items/", params={"sort": "nonexistent_field"})
+    assert r.status_code == 200

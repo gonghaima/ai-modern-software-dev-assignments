@@ -55,3 +55,39 @@ def test_create_note_validation(client):
     assert r.status_code == 422
     r = client.post("/notes/", json={"title": "valid", "content": ""})
     assert r.status_code == 422
+
+
+def test_notes_pagination_skip_limit(client):
+    ids = [
+        client.post("/notes/", json={"title": f"Note {i}", "content": "x"}).json()["id"]
+        for i in range(4)
+    ]
+    r = client.get("/notes/", params={"sort": "id", "skip": 1, "limit": 2})
+    assert r.status_code == 200
+    returned_ids = [n["id"] for n in r.json()]
+    assert returned_ids == ids[1:3]
+
+
+def test_notes_limit_one(client):
+    for i in range(3):
+        client.post("/notes/", json={"title": f"N{i}", "content": "x"})
+    r = client.get("/notes/", params={"limit": 1})
+    assert r.status_code == 200
+    assert len(r.json()) == 1
+
+
+def test_notes_sort_ascending_vs_descending(client):
+    ids = [
+        client.post("/notes/", json={"title": f"Sort {i}", "content": "x"}).json()["id"]
+        for i in range(3)
+    ]
+    asc_ids = [n["id"] for n in client.get("/notes/", params={"sort": "id"}).json()]
+    desc_ids = [n["id"] for n in client.get("/notes/", params={"sort": "-id"}).json()]
+    assert asc_ids == sorted(asc_ids)
+    assert desc_ids == sorted(desc_ids, reverse=True)
+
+
+def test_notes_invalid_sort_field_no_500(client):
+    client.post("/notes/", json={"title": "Fallback", "content": "x"})
+    r = client.get("/notes/", params={"sort": "nonexistent_field"})
+    assert r.status_code == 200
