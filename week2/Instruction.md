@@ -156,3 +156,9 @@ implement task2 "Task 2: Extend extraction logic" based on your plan
 /Users/stevengong/study/modern-software-dev-assignments/week7/docs/TASKS-Implementation.md
 
 Check /Users/stevengong/study/modern-software-dev-assignments/week7/writeup.md, update TODO section of "Task 2: Extend extraction logic"
+
+## Task3
+implement task3 "Task 3: Add a new model and relationships" based on your plan
+/Users/stevengong/study/modern-software-dev-assignments/week7/docs/TASKS-Implementation.md
+
+Check /Users/stevengong/study/modern-software-dev-assignments/week7/writeup.md, update TODO section of "Task 3: Try adding a new model and relationships"

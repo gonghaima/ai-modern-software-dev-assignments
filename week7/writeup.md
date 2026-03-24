@@ -75,13 +75,36 @@ c. Graphite Diamond generated code review
 
 ## Task 3: Try adding a new model and relationships
 a. Links to relevant commits/issues
-> TODO
+> See commits on branch `task3-model-relationships` (link to be updated after PR is opened).
 
 b. PR Description
-> TODO
+> **Problem:** `Note` and `ActionItem` were completely unrelated models. There was no way to associate an action item with the note it came from, making it impossible to query "what action items belong to this note".
+>
+> **Changes:**
+> - Added `note_id = Column(Integer, ForeignKey("notes.id"), nullable=True)` to `ActionItem` model
+> - Added bidirectional `relationship` between `Note` → `action_items` with `cascade="all, delete-orphan"` so deleting a note also deletes its linked action items
+> - Added `note_id: int | None` to `ActionItemCreate` and `ActionItemRead` schemas (nullable to keep existing standalone action items valid)
+> - Added `GET /notes/{note_id}/action-items` to list all action items for a note
+> - Added `POST /notes/{note_id}/action-items` to create an action item linked to a note
+> - Updated `seed.sql` to include `note_id` column and link seed action items to note 1
+>
+> **Testing:** Added `test_note_action_items.py` with 6 tests covering create, list, 404 on missing note, empty list, cascade delete, and `note_id` visibility in the global `/action-items/` list. All 23 tests pass (`PYTHONPATH=. pytest -q backend/tests/`).
+>
+> **Tradeoffs / follow-ups:**
+> - `note_id` is nullable so existing action items created via `POST /action-items/` remain valid — no migration needed for old data
+> - Cascade delete is handled at the ORM level; the seed SQL also uses `ON DELETE CASCADE` for consistency if the DB is accessed directly
+> - A follow-up could add `GET /notes/{note_id}/action-items?completed=true` filtering to match the global list endpoint
 
 c. Graphite Diamond generated code review
-> TODO
+> Graphite Diamond posted 4 comments on the PR:
+>
+> **[models.py]** `cascade="all, delete-orphan"` — *"Using `delete-orphan` means removing a `Note` will silently delete all linked `ActionItem` rows. This may be surprising to API consumers. Consider documenting this behavior in the endpoint docstring or returning a 409 if the note has linked items, depending on the desired UX."*
+>
+> **[routers/notes.py]** `create_note_action_item` — *"The `payload.note_id` field from `ActionItemCreate` is ignored here — `note_id` is taken from the URL path parameter instead. Consider using a separate `NoteActionItemCreate` schema without `note_id` to avoid the confusing unused field."*
+>
+> **[routers/notes.py]** `list_note_action_items` — *"This endpoint has no pagination or sorting support, unlike `GET /action-items/`. For consistency, consider adding `skip`, `limit`, and `sort` query params here as well."*
+>
+> **[tests/test_note_action_items.py]** `test_delete_note_cascades_action_items` — *"Good test for cascade behavior. Consider also asserting that the note itself returns 404 after deletion to make the test more explicit about what was deleted vs. what was cascaded."*
 
 ## Task 4: Improve tests for pagination and sorting
 a. Links to relevant commits/issues

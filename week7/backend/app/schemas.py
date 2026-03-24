@@ -26,12 +26,14 @@ class NotePatch(BaseModel):
 
 class ActionItemCreate(BaseModel):
     description: str = Field(min_length=1)
+    note_id: int | None = None
 
 
 class ActionItemRead(BaseModel):
     id: int
     description: str
     completed: bool
+    note_id: int | None
     created_at: datetime
     updated_at: datetime
 

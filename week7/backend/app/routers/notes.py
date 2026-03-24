@@ -5,8 +5,8 @@ from sqlalchemy import asc, desc, select
 from sqlalchemy.orm import Session
 
 from ..db import get_db
-from ..models import Note
-from ..schemas import NoteCreate, NotePatch, NoteRead
+from ..models import ActionItem, Note
+from ..schemas import ActionItemCreate, ActionItemRead, NoteCreate, NotePatch, NoteRead
 
 router = APIRouter(prefix="/notes", tags=["notes"])
 
@@ -73,3 +73,27 @@ def delete_note(note_id: int, db: Session = Depends(get_db)) -> None:
         raise HTTPException(status_code=404, detail="Note not found")
     db.delete(note)
     db.flush()
+
+
+@router.get("/{note_id}/action-items", response_model=list[ActionItemRead])
+def list_note_action_items(note_id: int, db: Session = Depends(get_db)) -> list[ActionItemRead]:
+    note = db.get(Note, note_id)
+    if not note:
+        raise HTTPException(status_code=404, detail="Note not found")
+    stmt = select(ActionItem).where(ActionItem.note_id == note_id)
+    rows = db.execute(stmt).scalars().all()
+    return [ActionItemRead.model_validate(row) for row in rows]
+
+
+@router.post("/{note_id}/action-items", response_model=ActionItemRead, status_code=201)
+def create_note_action_item(
+    note_id: int, payload: ActionItemCreate, db: Session = Depends(get_db)
+) -> ActionItemRead:
+    note = db.get(Note, note_id)
+    if not note:
+        raise HTTPException(status_code=404, detail="Note not found")
+    item = ActionItem(description=payload.description, completed=False, note_id=note_id)
+    db.add(item)
+    db.flush()
+    db.refresh(item)
+    return ActionItemRead.model_validate(item)
