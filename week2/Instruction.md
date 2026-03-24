@@ -168,3 +168,5 @@ implement task4 "Task 4: Improve tests for pagination and sorting" based on your
 /Users/stevengong/study/modern-software-dev-assignments/week7/docs/TASKS-Implementation.md
 
 Check /Users/stevengong/study/modern-software-dev-assignments/week7/writeup.md, update TODO section of "Task 4: Improve tests for pagination and sorting"
+
+Check and update "Brief Reflection" section in /Users/stevengong/study/modern-software-dev-assignments/week7/writeup.md

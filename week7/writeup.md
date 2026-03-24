@@ -141,16 +141,18 @@ c. Graphite Diamond generated code review
 
 ## Brief Reflection 
 a. The types of comments you typically made in your manual reviews (e.g., correctness, performance, security, naming, test gaps, API shape, UX, docs).
-> TODO 
+> My manual reviews focused primarily on **correctness** and **test gaps**. For Task 1, I checked that DELETE returned 204 and that 404 was raised correctly. For Task 2, I questioned whether broad action phrases like “should” would cause false positives. For Task 3, I verified cascade delete behavior and whether `note_id` being nullable was the right default. For Task 4, I looked at whether pagination assertions were fragile due to sequential id assumptions. I rarely commented on docs or security — those were lower priority given the scope.
 
 b. A comparison of **your** comments vs. **Graphite’s** AI-generated comments for each PR.
-> TODO
+> Graphite’s comments were largely complementary to mine rather than overlapping. For Task 1, I caught the missing 404 test for double DELETE; Graphite caught the missing `max_length` upper bound on `NoteCreate.title` and the `db.flush()` vs `db.commit()` ambiguity — both of which I missed. For Task 2, we both flagged the “should” false-positive risk, but Graphite also noted the nested-bullet limitation in `_BULLET_RE`. For Task 3, Graphite flagged the unused `payload.note_id` field (a schema design issue I overlooked) and the missing pagination on the nested endpoint. For Task 4, Graphite caught the vacuously-true assertion risk on an empty list, which I had not considered.
 
 c. When the AI reviews were better/worse than yours (cite specific examples)
-> TODO
+> **AI was better** on schema/API shape issues: in Task 3, Graphite correctly identified that `ActionItemCreate` having a `note_id` field that gets ignored in `create_note_action_item` is confusing — I had not noticed this inconsistency. In Task 1, Graphite’s suggestion to add `max_length` to align with the DB column constraint was a practical correctness catch I missed entirely.
+>
+> **AI was worse** on intent and context: in Task 4, Graphite suggested parametrizing pagination tests across notes and action items to reduce duplication, which is reasonable in a large codebase but overkill here. It also suggested documenting cascade delete behavior or returning 409, without knowing that the assignment intentionally kept the API simple — my review correctly deprioritized that.
 
 d. Your comfort level trusting AI reviews going forward and any heuristics for when to rely on them.
->TODO 
+> I’m comfortable using AI reviews as a **first-pass safety net**, especially for catching schema mismatches, missing edge-case tests, and API consistency issues. My heuristic: trust AI comments on concrete, verifiable things (missing field bounds, unused parameters, vacuously-true assertions) and be more skeptical on architectural suggestions (“extract a shared helper”, “return 409 instead of cascade”) where project context matters. I would not merge based solely on an AI review passing — but I would treat unaddressed AI comments as a checklist item before merging.
 
 
 
